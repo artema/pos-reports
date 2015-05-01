@@ -6,8 +6,6 @@ var AWS = require('aws-sdk'),
     uuid = require('node-uuid');
 
 function saveData(type, items) {
-  columns = columns || [];
-
   var payloads = items.reduce(function(value, item) {
     if (!item) {
       return value;
@@ -54,15 +52,20 @@ function getSession(sessions, time) {
 
   time = moment(time);
 
-  var session = Object.keys(sessions).reduce(function(value, id) {
-    var session = sessions[id];
+  var session = null,
+      keys = Object.keys(sessions);
 
-    if (time.isSame(moment(session.date), 'day')) {
-      return session;
-    }
+  if (keys.length > 0) {
+    session = keys.reduce(function(value, id) {
+      var s = sessions[id];
 
-    return value;
-  });
+      if (time.isSame(moment(s.date), 'day')) {
+        return s;
+      }
+
+      return value;
+    }, null);
+  }
 
   if (!session) {
     session = {
@@ -77,14 +80,13 @@ function getSession(sessions, time) {
 }
 
 module.exports = function(entry) {
-  var data = entry.data,
-      tasks = [],
+  var tasks = [],
       sessions = {};
 
-  if (data.sales) {
-    console.log('Processing ' + data.sales.length + ' sale records...');
+  if (entry.sales) {
+    console.log('Processing ' + entry.sales.length + ' sale records...');
 
-    tasks = tasks.concat(saveData('sales', data.sales.map(function(payload) {
+    tasks = tasks.concat(saveData('sales', entry.sales.map(function(payload) {
       return {
         session: getSession(sessions, payload.time),
         data: [
