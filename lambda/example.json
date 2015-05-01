@@ -1,0 +1,40 @@
+{
+    "company": 1,
+    "sales": [
+        {
+            "check": "0f29fdc1-fefa-4ea3-8e3c-b3447736eecb",
+            "customer": "7dc8c207-ee12-4802-bf19-a3d9005757ba",
+            "item": "16111a74-dac2-4c3d-9019-a3d900576a72",
+            "location": "a",
+            "price": 12.5,
+            "staff": "63261d68-2cfc-45a7-91d8-a3d80136d2b0",
+            "time": "2015-04-27T15:19:07.294Z"
+        },
+        {
+            "check": "0f29fdc1-fefa-4ea3-8e3c-b3447736eecb",
+            "customer": "7dc8c207-ee12-4802-bf19-a3d9005757ba",
+            "item": "16111a74-dac2-4c3d-9019-a3d900576a72",
+            "location": "a",
+            "price": 12.5,
+            "staff": "63261d68-2cfc-45a7-91d8-a3d80136d2b0",
+            "time": "2015-04-27T15:17:07.294Z"
+        },
+        {
+            "check": "0f29fdc1-fefa-4ea3-8e3c-b3447736eecb",
+            "customer": "7dc8c207-ee12-4802-bf19-a3d9005757ba",
+            "item": "16111a74-dac2-4c3d-9019-a3d900576a72",
+            "location": "b",
+            "price": 12.5,
+            "staff": "63261d68-2cfc-45a7-91d8-a3d80136d2b0",
+            "time": "2015-04-28T15:19:07.294Z"
+        },
+        {
+            "check": "0f29fdc1-fefa-4ea3-8e3c-b3447736eecb",
+            "item": "45261072-50d1-487f-aa66-a3df013ce3fd",
+            "location": "a",
+            "price": 5,
+            "staff": "c13043c6-a80c-4401-90a2-a3d801370614",
+            "time": "2015-04-27T15:18:07.294Z"
+        }
+    ]
+}
