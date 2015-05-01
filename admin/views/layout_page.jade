@@ -1,0 +1,14 @@
+extends layout_base
+
+block body
+  #wrapper
+    nav(role='navigation',class='navbar navbar-inverse navbar-static-top',style='margin-bottom:0')
+      .navbar-header
+        button(type='button', class='navbar-toggle', data-toggle='collapse',data-target='.navbar-ex1-collapse')
+          span(class='icon-bar'): | &nbsp;
+          span(class='icon-bar'): | &nbsp;
+          span(class='icon-bar'): | &nbsp;
+        span(class='navbar-brand'): img(src='/public/images/logo.png',alt='')
+      block navigation
+      block menu
+    block content

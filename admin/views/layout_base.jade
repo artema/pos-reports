@@ -1,0 +1,13 @@
+- var is_production = false && settings.env === 'production';
+
+doctype html
+html(lang='en')
+  head
+    meta(name='viewport',content='width=device-width, initial-scale=1.0')
+    meta(charset='utf-8')
+    link(href='/public/dist/styles' + (is_production ? '.min' : '') + '.css',rel='stylesheet')
+    script(src='/public/dist/shared' + (is_production ? '.min' : '') + '.js')
+    block head
+  body
+    div(ng-controller='ModalCtrl')
+    block body
