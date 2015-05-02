@@ -5,7 +5,7 @@ var isAuthenticated = function(req, res, next) {
     return next();
   }
 
-  res.redirect('/login');
+  res.redirect('/login?callback=' + encodeURIComponent(req.path));
 };
 
 module.exports = function(app) {

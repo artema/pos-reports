@@ -86,16 +86,14 @@ module.exports = function(grunt) {
       js: {
         files: {
           'public/dist/shared.js': [
-            'public/js/**/shared/**/*.js',
-            'public/js/**/shared.js'
+            'public/js/shared/**/*.js'
           ],
           'public/dist/panel.js': [
-            'public/js/**/panel/**/*.js',
-            'public/js/**/panel.js'
-          ],
-          'public/dist/signup.js': [
-          'public/js/**/signup/**/*.js',
-          'public/js/**/signup.js'
+            'public/js/controllers/**/*.js',
+            'public/js/directives/**/*.js',
+            'public/js/filters/**/*.js',
+            'public/js/services.js',
+            'public/js/panel.js'
           ]
         }
       }
@@ -107,7 +105,6 @@ module.exports = function(grunt) {
       client: {
         files: {
           'public/dist/panel.js': 'public/dist/panel.js',
-          'public/dist/signup.js': 'public/dist/signup.js',
           'public/dist/shared.js': 'public/dist/shared.js'
         }
       }
@@ -136,7 +133,7 @@ module.exports = function(grunt) {
       },
       styles: {
         files: {
-          "public/dist/styles.css": "public/less/styles.less"
+          "public/dist/styles.css": "public/less/*.less"
         }
       }
     },
