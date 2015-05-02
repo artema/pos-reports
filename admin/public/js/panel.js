@@ -2,6 +2,8 @@ angular
 .module('PosReportsPanel', [
 	'ngRoute',
 	'ngResource',
+	'angularModalService',
+	'angularFileUpload',
 	'PosReports.controllers',
 	'PosReports.directives',
 	'PosReports.filters',

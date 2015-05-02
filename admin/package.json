@@ -8,6 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "~1.0.0",
+    "bower": "^1.4.1",
     "connect-redis": "^2.1.0",
     "cookie-parser": "~1.0.1",
     "debug": "^2.1.0",
@@ -45,5 +46,8 @@
     "grunt-zip": "^0.16.0",
     "load-grunt-tasks": "^3.1.0",
     "nodemon": "^1.2.0"
+  },
+  "scripts": {
+    "postinstall" : "node_modules/.bin/bower install"
   }
 }

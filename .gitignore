@@ -5,6 +5,8 @@ dist
 node_modules
 npm-debug.log
 
+admin/public/libs
+
 aws.json
 mysql.json
 
