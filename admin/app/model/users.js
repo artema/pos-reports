@@ -1,3 +1,5 @@
+var passwordHash = require('password-hash');
+
 function Users(pool) {
   this._pool = pool;
 }
@@ -10,17 +12,21 @@ Users.prototype.findByName = function(name) {
         return reject(err);
       }
 
-      connection.query('SELECT * FROM `user` WHERE `login` = ?', [name], function(err, rows) {
+      connection.query('SELECT * FROM `user` WHERE `login` = ? LIMIT 1', [name], function(err, rows) {
         if (err) {
           return reject(err);
         }
 
         connection.release();
 
-        resolve(rows);
+        resolve(rows[0] || null);
       });
     });
   });
+};
+
+Users.prototype.validatePassword = function(user, password) {
+  return passwordHash.verify(password, user.password);
 };
 
 module.exports = function(pool) {

@@ -21,6 +21,7 @@
     "mysql": "^2.6.2",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
+    "password-hash": "^1.2.2",
     "q": "^1.1.2",
     "querystring": "^0.2.0",
     "serve-favicon": "^2.0.0"

@@ -4,9 +4,9 @@ var passport = require('passport'),
 module.exports = function(app) {
 
   // GET /logout
-  app.post('/logout', function(req, res){
+  app.get('/logout', function(req, res){
     req.logout();
-    res.status(200).end();
+    res.redirect('/');
   });
 
   //GET /login
@@ -24,7 +24,7 @@ module.exports = function(app) {
   app.post('/login', function(req, res, next) {
     var callback = req.query.callback || '/';
 
-    passport.authenticate('admin', function(err, user, info) {
+    passport.authenticate('local', function(err, user, info) {
       if (err || !user) {
         return res.render('login', {
           error: { message: info && info.message ? info.message : null },
@@ -32,7 +32,7 @@ module.exports = function(app) {
         });
       }
 
-      req.logIn(user, function(err) {
+      req.login(user, function(err) {
         if (err) {
           return next(err);
         }

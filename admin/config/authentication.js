@@ -21,21 +21,14 @@ module.exports = function(app) {
     name: 'pos-admin',
     secret: cookieSecret,
     saveUninitialized: false,
-    resave: false,
+    resave: true,
     rolling: false,
     unset: 'destroy',
     cookie: {
       maxAge: 1000 * 60 * 30,
-      secure: app.get('env') === 'production'
+      secure: false
     }
   }));
-
-  app.use(function(req, res, next) {
-    if (!req.session) {
-      return next(new Error('Session is not available.'));
-    }
-    next();
-  });
 
   // passport middleware =======================================================
 
