@@ -11,3 +11,6 @@ aws.json
 mysql.json
 
 .deploy
+
+emr/output
+emr/*.log
