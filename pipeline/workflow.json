@@ -1,0 +1,137 @@
+{
+  "objects": [
+    {
+      "id": "ActivityId",
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "name": "POSReports Hive job",
+      "maximumRetries": "2",
+      "runsOn": {
+        "ref": "ReportsClusterId"
+      },
+      "postStepCommand": "/home/hadoop/bin/emrfs delete --time 2 -u days",
+      "dependsOn": {
+        "ref": "ReportsActivityId"
+      },
+      "type": "EmrActivity",
+      "step": "s3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar,s3://us-east-1.elasticmapreduce/libs/hive/hive-script,--base-path,s3://us-east-1.elasticmapreduce/libs/hive/,--hive-versions,latest,--run-hive-script,--args,-f,#{myPOSHIVESCRIPT},-d,INPUT=#{myPOSTRANSFORMEDDATA}/#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')},-d,OUTPUT=#{myPOSOUTPUTDATA},-d,DATE=#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}"
+    },
+    {
+      "myPOSINPUTDATA": "s3://pos-reports/input",
+      "myPOSHIVESCRIPT": "s3://pos-reports/scripts/reports.q",
+      "myPOSTRANSFORMEDDATA": "s3://pos-reports/data",
+      "resourceRole": "DataPipelineDefaultResourceRole",
+      "myPOSPIGSCRIPT": "s3://pos-reports/scripts/reports.pig",
+      "id": "Default",
+      "failureAndRerunMode": "CASCADE",
+      "scheduleType": "cron",
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "name": "Default",
+      "pipelineLogUri": "s3://pos-reports/logs",
+      "role": "DataPipelineDefaultRole",
+      "myPOSOUTPUTDATA": "s3://pos-reports/reports",
+      "myPOSKEYPAIR": "eu-west-1"
+    },
+    {
+      "id": "ReportsDataNodeId",
+      "precondition": {
+        "ref": "ReportsExistsPreconditionId"
+      },
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "filePath": "#{myPOSINPUTDATA}/#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}",
+      "name": "POSReports S3",
+      "type": "S3DataNode"
+    },
+    {
+      "terminateAfter": "1 Hour",
+      "id": "ReportsClusterId",
+      "amiVersion": "3.2.1",
+      "keyPair": "#{myPOSKEYPAIR}",
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "masterInstanceType": "m1.medium",
+      "bootstrapAction": "s3://elasticmapreduce/bootstrap-actions/configure-hadoop,-e,fs.s3.consistent=true,-e, fs.s3.consistent.metadata.tableName=EmrFSMetadata, -e, fs.s3.consistent.retryCount=5, -e, fs.s3.consistent.retryPeriodSeconds=10, -e, fs.s3.enableServerSideEncryption=true",
+      "coreInstanceType": "m1.medium",
+      "enableDebugging": "true",
+      "name": "POSReports Cluster",
+      "coreInstanceCount": "1",
+      "type": "EmrCluster"
+    },
+    {
+      "id": "ReportsActivityId",
+      "input": {
+        "ref": "ReportsDataNodeId"
+      },
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "name": "POSReports Pig job",
+      "maximumRetries": "2",
+      "runsOn": {
+        "ref": "ReportsClusterId"
+      },
+      "type": "EmrActivity",
+      "preStepCommand": "/home/hadoop/bin/emrfs sync #{myPOSINPUTDATA}/#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}",
+      "step": "s3://us-east-1.elasticmapreduce/libs/script-runner/script-runner.jar,s3://us-east-1.elasticmapreduce/libs/pig/pig-script,--base-path,s3://us-east-1.elasticmapreduce/libs/pig/,--pig-versions,latest,--run-pig-script,--args,-f,#{myPOSPIGSCRIPT},-p,INPUT=#{myPOSINPUTDATA}/#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')},-p,OUTPUT=#{myPOSTRANSFORMEDDATA}/#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}"
+    },
+    {
+      "id": "ReportsExistsPreconditionId",
+      "name": "POSReportsExistsPrecondition",
+      "maximumRetries": "10",
+      "role": "DataPipelineDefaultRole",
+      "s3Prefix": "#{myPOSINPUTDATA}/#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}",
+      "type": "S3PrefixNotEmpty"
+    },
+    {
+      "id": "DefaultSchedule",
+      "name": "Every 1 day",
+      "startAt": "FIRST_ACTIVATION_DATE_TIME",
+      "type": "Schedule",
+      "period": "1 days"
+    }
+  ],
+  "parameters": [
+    {
+      "id": "myPOSKEYPAIR",
+      "default": "eu-west-1",
+      "description": "myPOSKEYPAIR",
+      "type": "String"
+    },
+    {
+      "id": "myPOSOUTPUTDATA",
+      "default": "s3://pos-reports/reports",
+      "description": "myPOSOUTPUTDATA",
+      "type": "AWS::S3::ObjectKey"
+    },
+    {
+      "id": "myPOSTRANSFORMEDDATA",
+      "default": "s3://pos-reports/data",
+      "description": "myPOSTRANSFORMEDDATA",
+      "type": "AWS::S3::ObjectKey"
+    },
+    {
+      "id": "myPOSPIGSCRIPT",
+      "default": "s3://pos-reports/scripts/reports.pig",
+      "description": "myPOSPIGSCRIPT",
+      "type": "AWS::S3::ObjectKey"
+    },
+    {
+      "id": "myPOSHIVESCRIPT",
+      "default": "s3://pos-reports/scripts/reports.q",
+      "description": "myPOSHIVESCRIPT",
+      "type": "AWS::S3::ObjectKey"
+    },
+    {
+      "id": "myPOSINPUTDATA",
+      "default": "s3://pos-reports/input",
+      "description": "myPOSINPUTDATA",
+      "type": "AWS::S3::ObjectKey"
+    }
+  ]
+}
