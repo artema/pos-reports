@@ -1,7 +1,10 @@
+var querystring = require('querystring');
+
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
-  var aws = grunt.file.readJSON('aws.json');
-  
+  var aws = grunt.file.readJSON('aws.json'),
+      mysql = grunt.file.readJSON('mysql.json');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concurrent: {
@@ -21,10 +24,11 @@ module.exports = function(grunt) {
     nodemon: {
       options: {
         env: {
-          PORT: 8081,
+          PORT: 8082,
           NODE_ENV: 'development',
           DEBUG: 'connect:*,passport:*,admin:*',
-          COOKIE_SECRET: '1234567890'
+          COOKIE_SECRET: '1234567890',
+          DATABASE: querystring.stringify(mysql)
         },
         callback: function (nodemon) {
           nodemon.on('log', function (event) {

@@ -7,6 +7,7 @@ var http = require('http').createServer(app);
 
 require('./config/variables')(app);
 require('./config/middleware')(app);
+require('./config/models')(app);
 require('./config/authentication')(app);
 require('./config/views')(app);
 

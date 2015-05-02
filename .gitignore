@@ -6,5 +6,6 @@ node_modules
 npm-debug.log
 
 aws.json
+mysql.json
 
 .deploy

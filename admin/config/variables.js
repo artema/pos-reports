@@ -15,4 +15,5 @@ function parseVariable(name) {
 
 module.exports = function(app) {
   app.set('cookie_secret', getVariable('COOKIE_SECRET'));
+  app.set('database', parseVariable('DATABASE'));
 };

@@ -18,7 +18,7 @@ module.exports = function(app) {
   var cookieSecret = getVariable(app, 'cookie_secret');
 
   app.use(session({
-    name: 'admin',
+    name: 'pos-admin',
     secret: cookieSecret,
     saveUninitialized: false,
     resave: false,
