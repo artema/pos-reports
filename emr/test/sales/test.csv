@@ -1,3 +1,12 @@
-1,a,2015-04-27T15:19:07.294Z,0f29fdc1-fefa-4ea3-8e3c-b3447736eecb,63261d68-2cfc-45a7-91d8-a3d80136d2b0,7dc8c207-ee12-4802-bf19-a3d9005757ba,16111a74-dac2-4c3d-9019-a3d900576a72,12.5
-1,a,2015-04-27T15:17:07.294Z,0f29fdc1-fefa-4ea3-8e3c-b3447736eecb,63261d68-2cfc-45a7-91d8-a3d80136d2b0,7dc8c207-ee12-4802-bf19-a3d9005757ba,16111a74-dac2-4c3d-9019-a3d900576a72,12.5
-1,a,2015-04-27T15:18:07.294Z,0f29fdc1-fefa-4ea3-8e3c-b3447736eeca,c13043c6-a80c-4401-90a2-a3d801370614,,45261072-50d1-487f-aa66-a3df013ce3fd,5
+1,location1,2015-04-27T15:19:07.294Z,check1,staff1,customer1,item1,12.5
+1,location1,2015-04-27T15:17:07.294Z,check1,staff1,customer1,item1,12.5
+1,location1,2015-04-27T15:17:07.294Z,check1,staff1,customer1,item2,6
+1,location1,2015-04-27T15:18:07.294Z,check2,staff2,,item1,12.5
+1,location1,2015-04-27T15:18:07.294Z,check2,staff2,,item3,5
+1,location1,2015-04-27T15:18:07.294Z,check2,staff2,,item2,6
+1,location1,2015-04-27T15:18:07.294Z,check2,staff2,,item4,5
+1,location1,2015-04-27T15:18:07.294Z,check2,staff2,,item5,6
+1,location1,2015-04-27T15:18:07.294Z,check3,staff3,customer2,item3,5
+1,location1,2015-04-27T15:18:07.294Z,check3,staff3,customer2,item2,6
+1,location2,2015-04-27T15:19:07.294Z,check4,staff4,customer1,item1,12.5
+1,location2,2015-04-27T15:17:07.294Z,check4,staff4,customer1,item2,6

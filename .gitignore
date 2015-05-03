@@ -14,3 +14,4 @@ mysql.json
 
 emr/output
 emr/*.log
+emr/metastore_db

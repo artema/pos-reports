@@ -6,7 +6,7 @@ DEFINE CSVExcelStorage org.apache.pig.piggybank.storage.CSVExcelStorage;
 sales =
   LOAD '$INPUT/sales' USING CSVExcelStorage(',', 'NO_MULTILINE', 'UNIX', 'SKIP_INPUT_HEADER', 'SKIP_OUTPUT_HEADER')
   AS (
-      company: chararray,
+      company: int,
       location: chararray,
       time: datetime,
       check: chararray,
@@ -22,6 +22,7 @@ checks_by_location = FOREACH sales_by_check GENERATE
   group as check,
   BagToTuple(sales.company).$0 as company,
   BagToTuple(sales.location).$0 as location,
+  BagToTuple(sales.customer).$0 as customer,
   BagToTuple(sales.staff).$0 as staff;
 
 checks_totals = FOREACH sales_by_check GENERATE
@@ -29,11 +30,11 @@ checks_totals = FOREACH sales_by_check GENERATE
   MAX(sales.time) as time,
   SUM(sales.price) as total;
 
-items_by_location = FOREACH sales GENERATE
+items_by_check = FOREACH sales GENERATE
   check,
   item,
   price;
 
 STORE checks_by_location INTO '${OUTPUT}/checks_by_location';
 STORE checks_totals INTO '${OUTPUT}/checks_totals';
-STORE items_by_location INTO '${OUTPUT}/items_by_location';
+STORE items_by_check INTO '${OUTPUT}/items_by_check';
