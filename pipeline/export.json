@@ -1,0 +1,395 @@
+{
+    "objects": [
+        {
+            "id": "Default",
+            "name": "Default",
+            "failureAndRerunMode": "CASCADE",
+            "pipelineLogUri": "#{myLogsS3Loc}",
+            "resourceRole": "DataPipelineDefaultResourceRole",
+            "role": "DataPipelineDefaultRole",
+            "schedule": {
+                "ref": "DefaultSchedule"
+            },
+            "scheduleType": "cron"
+        },
+        {
+            "id": "Ec2Instance",
+            "name": "Ec2Instance",
+            "actionOnTaskFailure": "terminate",
+            "instanceType": "t1.micro",
+            "securityGroups": "#{myEc2RdsSecurityGrps}",
+            "terminateAfter": "1 Hours",
+            "type": "Ec2Resource"
+        },
+        {
+            "id": "CSVFormat",
+            "name": "CSVFormat",
+            "type": "CSV"
+        },
+        {
+            "id": "DefaultSchedule",
+            "name": "Every 1 day",
+            "period": "1 days",
+            "startAt": "FIRST_ACTIVATION_DATE_TIME",
+            "type": "Schedule"
+        },
+        {
+            "id": "ActivityCustomerAverage",
+            "name": "ActivityCustomerAverage",
+            "input": {
+                "ref": "InputCustomerAverage"
+            },
+            "output": {
+                "ref": "DestinationCustomerAverage"
+            },
+            "runsOn": {
+                "ref": "Ec2Instance"
+            },
+            "type": "CopyActivity"
+        },
+        {
+            "id": "InputCustomerAverage",
+            "name": "InputCustomerAverage",
+            "directoryPath": "#{myInputS3Loc}/report-customer-average",
+            "precondition": {
+                "ref": "PreconditionInputCustomerAverage"
+            },
+            "dataFormat": {
+                "ref": "CSVFormat"
+            },
+            "type": "S3DataNode"
+        },
+        {
+            "id": "PreconditionInputCustomerAverage",
+            "name": "PreconditionInputCustomerAverage",
+            "s3Prefix": "#{myInputS3Loc}/report-customer-average",
+            "maximumRetries": "5",
+            "role": "DataPipelineDefaultRole",
+            "type": "S3PrefixNotEmpty"
+        },
+        {
+            "id": "DestinationCustomerAverage",
+            "name": "DestinationCustomerAverage",
+            "table": "report-customer-average",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, value) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?);",
+            "selectQuery": "select * from #{table}",
+            "*password": "#{*myRDSPassword}",
+            "connectionString": "#{myRDSConnectStr}",
+            "username": "#{myRDSUsername}",
+            "type": "MySqlDataNode"
+        },
+        {
+            "id": "ActivityCustomerTop",
+            "name": "ActivityCustomerTop",
+            "input": {
+                "ref": "InputCustomerTop"
+            },
+            "output": {
+                "ref": "DestinationCustomerTop"
+            },
+            "runsOn": {
+                "ref": "Ec2Instance"
+            },
+            "type": "CopyActivity"
+        },
+        {
+            "id": "InputCustomerTop",
+            "name": "InputCustomerTop",
+            "directoryPath": "#{myInputS3Loc}/report-customer-top",
+            "precondition": {
+                "ref": "PreconditionInputCustomerTop"
+            },
+            "dataFormat": {
+                "ref": "CSVFormat"
+            },
+            "type": "S3DataNode"
+        },
+        {
+            "id": "PreconditionInputCustomerTop",
+            "name": "PreconditionInputCustomerTop",
+            "s3Prefix": "#{myInputS3Loc}/report-customer-top",
+            "maximumRetries": "5",
+            "role": "DataPipelineDefaultRole",
+            "type": "S3PrefixNotEmpty"
+        },
+        {
+            "id": "DestinationCustomerTop",
+            "name": "DestinationCustomerTop",
+            "table": "report-customer-top",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, date, customer_key, value) VALUES(?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?, ?);",
+            "selectQuery": "select * from #{table}",
+            "*password": "#{*myRDSPassword}",
+            "connectionString": "#{myRDSConnectStr}",
+            "username": "#{myRDSUsername}",
+            "type": "MySqlDataNode"
+        },
+        {
+            "id": "ActivityItemPair",
+            "name": "ActivityItemPair",
+            "input": {
+                "ref": "InputItemPair"
+            },
+            "output": {
+                "ref": "DestinationItemPair"
+            },
+            "runsOn": {
+                "ref": "Ec2Instance"
+            },
+            "type": "CopyActivity"
+        },
+        {
+            "id": "InputItemPair",
+            "name": "InputItemPair",
+            "directoryPath": "#{myInputS3Loc}/report-item-pair",
+            "precondition": {
+                "ref": "PreconditionInputItemPair"
+            },
+            "dataFormat": {
+                "ref": "CSVFormat"
+            },
+            "type": "S3DataNode"
+        },
+        {
+            "id": "PreconditionInputItemPair",
+            "name": "PreconditionInputItemPair",
+            "s3Prefix": "#{myInputS3Loc}/report-item-pair",
+            "maximumRetries": "5",
+            "role": "DataPipelineDefaultRole",
+            "type": "S3PrefixNotEmpty"
+        },
+        {
+            "id": "DestinationItemPair",
+            "name": "DestinationItemPair",
+            "table": "report-item-pair",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, item1_key, item2_key) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?, ?);",
+            "selectQuery": "select * from #{table}",
+            "*password": "#{*myRDSPassword}",
+            "connectionString": "#{myRDSConnectStr}",
+            "username": "#{myRDSUsername}",
+            "type": "MySqlDataNode"
+        },
+        {
+            "id": "ActivityItemPopular",
+            "name": "ActivityItemPopular",
+            "input": {
+                "ref": "InputItemPopular"
+            },
+            "output": {
+                "ref": "DestinationItemPopular"
+            },
+            "runsOn": {
+                "ref": "Ec2Instance"
+            },
+            "type": "CopyActivity"
+        },
+        {
+            "id": "InputItemPopular",
+            "name": "InputItemPopular",
+            "directoryPath": "#{myInputS3Loc}/report-item-popular",
+            "precondition": {
+                "ref": "PreconditionInputItemPopular"
+            },
+            "dataFormat": {
+                "ref": "CSVFormat"
+            },
+            "type": "S3DataNode"
+        },
+        {
+            "id": "PreconditionInputItemPopular",
+            "name": "PreconditionInputItemPopular",
+            "s3Prefix": "#{myInputS3Loc}/report-item-popular",
+            "maximumRetries": "5",
+            "role": "DataPipelineDefaultRole",
+            "type": "S3PrefixNotEmpty"
+        },
+        {
+            "id": "DestinationItemPopular",
+            "name": "DestinationItemPopular",
+            "table": "report-item-popular",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, item_key, value) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?, ?);",
+            "selectQuery": "select * from #{table}",
+            "*password": "#{*myRDSPassword}",
+            "connectionString": "#{myRDSConnectStr}",
+            "username": "#{myRDSUsername}",
+            "type": "MySqlDataNode"
+        },
+        {
+            "id": "ActivityItemTop",
+            "name": "ActivityItemTop",
+            "input": {
+                "ref": "InputItemTop"
+            },
+            "output": {
+                "ref": "DestinationItemTop"
+            },
+            "runsOn": {
+                "ref": "Ec2Instance"
+            },
+            "type": "CopyActivity"
+        },
+        {
+            "id": "InputItemTop",
+            "name": "InputItemTop",
+            "directoryPath": "#{myInputS3Loc}/report-item-top",
+            "precondition": {
+                "ref": "PreconditionInputItemTop"
+            },
+            "dataFormat": {
+                "ref": "CSVFormat"
+            },
+            "type": "S3DataNode"
+        },
+        {
+            "id": "PreconditionInputItemTop",
+            "name": "PreconditionInputItemTop",
+            "s3Prefix": "#{myInputS3Loc}/report-item-top",
+            "maximumRetries": "5",
+            "role": "DataPipelineDefaultRole",
+            "type": "S3PrefixNotEmpty"
+        },
+        {
+            "id": "DestinationItemTop",
+            "name": "DestinationItemTop",
+            "table": "report-item-top",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, item_key, value) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?, ?);",
+            "selectQuery": "select * from #{table}",
+            "*password": "#{*myRDSPassword}",
+            "connectionString": "#{myRDSConnectStr}",
+            "username": "#{myRDSUsername}",
+            "type": "MySqlDataNode"
+        },
+        {
+            "id": "ActivitySalesTotal",
+            "name": "ActivitySalesTotal",
+            "input": {
+                "ref": "InputSalesTotal"
+            },
+            "output": {
+                "ref": "DestinationSalesTotal"
+            },
+            "runsOn": {
+                "ref": "Ec2Instance"
+            },
+            "type": "CopyActivity"
+        },
+        {
+            "id": "InputSalesTotal",
+            "name": "InputSalesTotal",
+            "directoryPath": "#{myInputS3Loc}/report-sales-total",
+            "precondition": {
+                "ref": "PreconditionInputSalesTotal"
+            },
+            "dataFormat": {
+                "ref": "CSVFormat"
+            },
+            "type": "S3DataNode"
+        },
+        {
+            "id": "PreconditionInputSalesTotal",
+            "name": "PreconditionInputSalesTotal",
+            "s3Prefix": "#{myInputS3Loc}/report-sales-total",
+            "maximumRetries": "5",
+            "role": "DataPipelineDefaultRole",
+            "type": "S3PrefixNotEmpty"
+        },
+        {
+            "id": "DestinationSalesTotal",
+            "name": "DestinationSalesTotal",
+            "table": "report-sales-total",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, amount) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?);",
+            "selectQuery": "select * from #{table}",
+            "*password": "#{*myRDSPassword}",
+            "connectionString": "#{myRDSConnectStr}",
+            "type": "MySqlDataNode",
+            "username": "#{myRDSUsername}"
+        },
+        {
+            "id": "ActivityStaffTop",
+            "name": "ActivityStaffTop",
+            "input": {
+                "ref": "InputStaffTop"
+            },
+            "output": {
+                "ref": "DestinationStaffTop"
+            },
+            "runsOn": {
+                "ref": "Ec2Instance"
+            },
+            "type": "CopyActivity"
+        },
+        {
+            "id": "InputStaffTop",
+            "name": "InputStaffTop",
+            "directoryPath": "#{myInputS3Loc}/report-staff-top",
+            "precondition": {
+                "ref": "PreconditionInputStaffTop"
+            },
+            "dataFormat": {
+                "ref": "CSVFormat"
+            },
+            "type": "S3DataNode"
+        },
+        {
+            "id": "PreconditionInputStaffTop",
+            "name": "PreconditionInputStaffTop",
+            "s3Prefix": "#{myInputS3Loc}/report-staff-top",
+            "maximumRetries": "5",
+            "role": "DataPipelineDefaultRole",
+            "type": "S3PrefixNotEmpty"
+        },
+        {
+            "id": "DestinationStaffTop",
+            "name": "DestinationStaffTop",
+            "table": "report-staff-top",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, staff_key, value) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?, ?);",
+            "selectQuery": "select * from #{table}",
+            "*password": "#{*myRDSPassword}",
+            "connectionString": "#{myRDSConnectStr}",
+            "type": "MySqlDataNode",
+            "username": "#{myRDSUsername}"
+        }
+    ],
+    "parameters": [
+        {
+            "description": "RDS MySQL username",
+            "id": "myRDSUsername",
+            "type": "String"
+        },
+        {
+            "description": "RDS MySQL password",
+            "id": "*myRDSPassword",
+            "type": "String"
+        },
+        {
+            "description": "RDS MySQL security group(s)",
+            "helpText": "The names of one or more EC2 security groups that have access to the RDS MySQL cluster.",
+            "id": "myEc2RdsSecurityGrps",
+            "isArray": "true",
+            "optional": "true",
+            "type": "String",
+            "watermark": "security group name"
+        },
+        {
+            "description": "RDS MySQL connection string",
+            "id": "myRDSConnectStr",
+            "type": "String"
+        },
+        {
+            "description": "Input S3 file path",
+            "id": "myInputS3Loc",
+            "type": "AWS::S3::ObjectKey"
+        },
+        {
+            "description": "Logs S3 file path",
+            "id": "myLogsS3Loc",
+            "type": "AWS::S3::ObjectKey"
+        }
+    ],
+    "values": {
+        "myInputS3Loc": "s3://pos-reports/reports/#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}",
+        "myRDSConnectStr": "jdbc:mysql://pos-db.cddk2mcy7t4j.eu-west-1.rds.amazonaws.com:3306/pos",
+        "myRDSUsername": "admin",
+        "*myRDSPassword": "",
+        "myLogsS3Loc": "s3://pos-reports/logs/"
+    }
+}
