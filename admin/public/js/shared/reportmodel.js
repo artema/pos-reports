@@ -61,4 +61,30 @@ window.app.ReportModel = class ReportModel {
         });
     });
   }
+
+  staffTop(query) {
+    return this._ReportService.staffTop(query).then(data => {
+      let items = data.reduce((result, entry) => {
+        let item = result[entry.staff_key];
+
+        if (!item) {
+          result[entry.staff_key] = item = entry;
+          delete entry.date;
+        }
+        else {
+          item.value += entry.value;
+        }
+
+        return result;
+      }, {});
+
+      return Object.keys(items)
+        .map(key => items[key])
+        .sort((a, b) => {
+          if (a.value > b.value) { return -1; }
+          if (a.value < b.value) { return 1; }
+          return 0;
+        });
+    });
+  }
 };

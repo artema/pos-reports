@@ -17,4 +17,12 @@ window.app.MappingModel = class MappingModel {
       name: key
     };
   }
+
+  getStaff(key) {
+    return {
+      id: key,
+      firstName: key,
+      lastName: ''
+    };
+  }
 };
