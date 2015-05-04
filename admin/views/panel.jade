@@ -12,7 +12,7 @@ block navigation
   div(ng-controller='NavigationController',ng-include="'/public/partials/navigation.html'")
 
 block content
-  #page-wrapper: .row
+  #page-wrapper
     div(ng-view)
     script(type='text/javascript').
       (function() {

@@ -3,4 +3,6 @@ angular.module('PosReports.controllers')
   ['$scope', '$timeout',
   ($scope, $timeout) => {
 
+  $('#main-menu').metisMenu();
+
 }]);
