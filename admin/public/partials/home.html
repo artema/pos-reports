@@ -49,7 +49,7 @@
             </a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6" ng-show="topItem">
         <div class="panel panel-yellow">
             <div class="panel-heading">
                 <div class="row">
@@ -57,7 +57,7 @@
                         <i class="fa fa-shopping-cart fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">Капучино</div>
+                        <div class="huge">{{topItem.name}}</div>
                         <div>Самый популярный товар</div>
                     </div>
                 </div>

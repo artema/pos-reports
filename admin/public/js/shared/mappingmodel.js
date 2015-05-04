@@ -11,6 +11,13 @@ window.app.MappingModel = class MappingModel {
     };
   }
 
+  getItem(key) {
+    return {
+      id: key,
+      name: key
+    };
+  }
+
   getLocation(key) {
     return {
       id: key,
