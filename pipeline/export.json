@@ -161,7 +161,7 @@
             "id": "DestinationItemPair",
             "name": "DestinationItemPair",
             "table": "report-item-pair",
-            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, item1_key, item2_key) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?, ?);",
+            "insertQuery": "INSERT INTO `#{table}` (company_id, location_key, date, item1_key, item2_key) VALUES(?, ?, '#{format(minusDays(@scheduledStartTime,1),'YYYY-MM-dd')}  00:00:00', ?, ?) ON DUPLICATE KEY UPDATE item1_key = values(item1_key);",
             "selectQuery": "select * from #{table}",
             "*password": "#{*myRDSPassword}",
             "connectionString": "#{myRDSConnectStr}",
