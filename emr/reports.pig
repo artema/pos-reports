@@ -1,6 +1,6 @@
 --pig -x local -f ./reports.pig -p INPUT=./test -p OUTPUT=./output/data
-REGISTER file:/usr/local/Cellar/pig/0.14.0/libexec/lib/piggybank.jar;
---REGISTER file:/home/hadoop/pig/lib/piggybank.jar
+--REGISTER file:/usr/local/Cellar/pig/0.14.0/libexec/lib/piggybank.jar;
+REGISTER file:/home/hadoop/pig/lib/piggybank.jar
 DEFINE CSVExcelStorage org.apache.pig.piggybank.storage.CSVExcelStorage;
 
 sales =
