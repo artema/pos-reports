@@ -33,7 +33,7 @@ Users.prototype.getCompany = function(user) {
         return reject(err);
       }
 
-      connection.query('SELECT * FROM `company` WHERE `id` = ? LIMIT 1', [user.company_id], function(err, rows) {
+      connection.query('SELECT * FROM `company` WHERE `id` = ?', [user.company_id], function(err, rows) {
         if (err) {
           return reject(err);
         }
