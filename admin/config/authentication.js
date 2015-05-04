@@ -1,5 +1,6 @@
 var session = require('express-session'),
-    passport = require('passport');
+    passport = require('passport'),
+    RedisStore = require('connect-redis')(session);
 
 function getVariable(app, name) {
   var value = app.get(name);
@@ -15,17 +16,30 @@ module.exports = function(app) {
 
   // cookie session ============================================================
 
-  var cookieSecret = getVariable(app, 'cookie_secret');
+  var cookieSecret = getVariable(app, 'cookie_secret'),
+      redisConfig = app.get('redis_configuration'),
+      sessionStore;
+
+  if (redisConfig && redisConfig.host) {
+    var redisOptions = {
+      host:     redisConfig.host,
+      port:     redisConfig.port || 6379,
+      pass:     redisConfig.password || '',
+      prefix:   'pos_session_'
+    };
+
+    sessionStore = new RedisStore(redisOptions);
+  }
 
   app.use(session({
     name: 'pos-admin',
-    secret: cookieSecret,
+    secret:   cookieSecret,
     saveUninitialized: false,
-    resave: true,
-    rolling: false,
-    unset: 'destroy',
+    resave:   false,
+    rolling:  false,
+    store:    sessionStore,
     cookie: {
-      maxAge: 1000 * 60 * 30,
+      maxAge: 1000 * 60 * 60 * 24,
       secure: false
     }
   }));

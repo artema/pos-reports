@@ -28,7 +28,8 @@ module.exports = function(grunt) {
           NODE_ENV: 'development',
           DEBUG: 'connect:*,passport:*,admin:*',
           COOKIE_SECRET: '1234567890',
-          DATABASE: querystring.stringify(mysql)
+          DATABASE: querystring.stringify(mysql),
+          REDIS_CONFIGURATION: 'host=localhost&port=6379'
         },
         callback: function (nodemon) {
           nodemon.on('log', function (event) {
