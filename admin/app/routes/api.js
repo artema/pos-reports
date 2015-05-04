@@ -30,6 +30,7 @@ module.exports = function(app) {
       users.getCompany(req.user).then(function(company) {
         reports[name.replace('-', '_')]({
           date: req.query.date,
+          days: req.query.days || 1,
           company: company
         }).then(onData(res), onError(res));
       }, onError(res));
