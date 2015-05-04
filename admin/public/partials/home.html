@@ -27,7 +27,7 @@
             </a>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6" ng-show="customerAverage">
         <div class="panel panel-green">
             <div class="panel-heading">
                 <div class="row">
@@ -35,7 +35,7 @@
                         <i class="fa fa-money fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">120&nbsp;₽</div>
+                        <div class="huge">{{customerAverage}}&nbsp;₽</div>
                         <div>Средний чек</div>
                     </div>
                 </div>
