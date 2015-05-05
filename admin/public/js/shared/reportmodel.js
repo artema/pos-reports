@@ -228,4 +228,61 @@ window.app.ReportModel = class ReportModel {
         });
     });
   }
+
+  salesTotal(query) {
+    return this._ReportService.salesTotal(query).then(data => {
+      let items = data.reduce((result, entry) => {
+        let item = result[entry.location_key];
+
+        if (!item) {
+          result[entry.location_key] = item = entry;
+          delete entry.date;
+        }
+        else {
+          item.value += entry.value;
+        }
+
+        return result;
+      }, {});
+
+      return Object.keys(items)
+        .map(key => items[key])
+        .sort((a, b) => {
+          if (a.value > b.value) { return -1; }
+          if (a.value < b.value) { return 1; }
+          return 0;
+        });
+    });
+  }
+
+  salesTotalAll(query) {
+    return this._ReportService.salesTotal(query).then(data => {
+      let items = data.reduce((result, entry) => {
+        let group = result[entry.date];
+
+        if (!group) {
+          result[entry.date] = group = {
+            date: entry.date,
+            items: []
+          };
+        }
+
+        delete entry.date;
+        group.items.push(entry);
+
+        return result;
+      }, {});
+
+      return Object.keys(items)
+        .map(key => items[key])
+        .sort((a, b) => {
+          let date1 = moment(a.date),
+              date2 = moment(b.date);
+
+          if (date1.isAfter(date2)) { return -1; }
+          if (date2.isAfter(date1)) { return 1; }
+          return 0;
+        });
+    });
+  }
 };

@@ -5,7 +5,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-3 col-md-6">
+    <div class="col-lg-3 col-md-6" ng-show="salesTotal">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -13,7 +13,7 @@
                         <i class="fa fa-line-chart fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class="huge">1,260,500&nbsp;₽</div>
+                        <div class="huge">{{salesTotal}}&nbsp;₽</div>
                         <div>Общая выручка</div>
                     </div>
                 </div>
@@ -99,11 +99,36 @@
   <div class="col-lg-8">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <i class="fa fa-bar-chart-o fa-fw"></i> Продажи самых популярных товаров
+            <i class="fa fa-line-chart fa-fw"></i> Структура спроса на популярные товары
         </div>
         <div class="panel-body">
-            <div id="chart-item-top"></div>
+            <div id="chart-home-item-top"></div>
         </div>
+        <a href="#">
+          <div class="panel-footer">
+              <a href="#/items" class="pull-left">Посмотреть отчет</a>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <div class="clearfix"></div>
+          </div>
+        </a>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> Распределение выручки по заведениям
+        </div>
+        <div class="panel-body">
+          <div id="chart-home-locations"></div>
+        </div>
+        <a href="#">
+          <div class="panel-footer">
+              <a href="#/sales" class="pull-left">Посмотреть отчет</a>
+              <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+              <div class="clearfix"></div>
+          </div>
+        </a>
     </div>
   </div>
 </div>

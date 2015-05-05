@@ -3,8 +3,6 @@ angular.module('PosReports.controllers')
   ['$scope', '$timeout', 'MappingModel', 'ReportModel', 'QueryModel',
   ($scope, $timeout, MappingModel, ReportModel, QueryModel) => {
 
-  $scope.popularItems = [];
-
   function loadData() {
     ReportModel.itemPopular(QueryModel.query).then(items => {
       ReportModel.itemPair(QueryModel.query).then(pairs => {
@@ -30,7 +28,8 @@ angular.module('PosReports.controllers')
             }).filter((c, i) => i < 10);
 
             var itemsPopularityKeys = {};
-            var itemsPopularity = itemsAll.map(group => {
+            var itemsPopularity = itemsAll
+            .map(group => {
               let result = {
                 date: group.date
               };
@@ -46,6 +45,8 @@ angular.module('PosReports.controllers')
               return result;
             });
 
+            itemsPopularity.reverse();
+
             Morris.Area({
               element: 'chart-items-popularity',
               data: itemsPopularity,
@@ -54,7 +55,8 @@ angular.module('PosReports.controllers')
               labels: Object.keys(itemsPopularityKeys).map(x => itemsPopularityKeys[x].name),
               pointSize: 2,
               hideHover: 'auto',
-              resize: true
+              resize: true,
+              parseTime: false
             });
           });
         });
