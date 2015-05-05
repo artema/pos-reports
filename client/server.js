@@ -43,54 +43,56 @@ function run(day, company) {
     "location2"
   ];
 
-  var kinesis = new AWS.Kinesis(),
-      sales = [];
+  var kinesis = new AWS.Kinesis();
 
-  for (var i = 0; i < 100; i++) {
-    var checkId = uuid.v4(),
-        checkLocation = getRandom(locations),
-        checkStaff = getRandom(staff),
-        checkCustomer = getRandom(customers),
-        checkDate = moment(day)
-          .add(Math.floor(24 * Math.random()), 'hours')
-          .add(Math.floor(60 * Math.random()), 'minutes')
-          .add(Math.floor(60 * Math.random()), 'seconds');
+  for (var v = 0; v < 5; v++) {
+    var sales = [];
+    for (var i = 0; i < 100; i++) {
+      var checkId = uuid.v4(),
+          checkLocation = getRandom(locations),
+          checkStaff = getRandom(staff),
+          checkCustomer = getRandom(customers),
+          checkDate = moment(day)
+            .add(Math.floor(24 * Math.random()), 'hours')
+            .add(Math.floor(60 * Math.random()), 'minutes')
+            .add(Math.floor(60 * Math.random()), 'seconds');
 
-    if (Math.random() < 0.7) {
-      checkCustomer = null;
+      if (Math.random() < 0.7) {
+        checkCustomer = null;
+      }
+
+      for (var j = 0; j < Math.random() * 4; j++) {
+        var item = getRandom(items);
+        var check = {
+          time: checkDate.format(),
+          location: checkLocation,
+          check: checkId,
+          staff: checkStaff,
+          item: item.name,
+          price: item.price,
+          customer: checkCustomer
+        };
+
+        sales.push(check);
+      }
     }
 
-    for (var j = 0; j < Math.random() * 4; j++) {
-      var item = getRandom(items);
-      var check = {
-        time: checkDate.format(),
-        location: checkLocation,
-        check: checkId,
-        staff: checkStaff,
-        item: item.name,
-        price: item.price,
-        customer: checkCustomer
-      };
-
-      sales.push(check);
-    }
+    kinesis.putRecord({
+      Data: JSON.stringify({
+        company: company,
+        sales: sales
+      }),
+      PartitionKey: 'test',
+      StreamName: 'pos-input'
+    }, function(err) {
+      if (err) {
+        console.error(err, err.stack);
+      }
+      else {
+        console.log('Complete');
+      }
+    });
   }
-
-  kinesis.putRecord({
-    Data: JSON.stringify({
-      company: company,
-      sales: sales
-    }),
-    PartitionKey: 'test',
-    StreamName: 'pos-input'
-  }, function(err) {
-    if (err) {
-      console.error(err, err.stack);
-    }
-    else {
-      console.log('Complete');
-    }
-  });
 }
 
 run('2015-05-04', 1);
