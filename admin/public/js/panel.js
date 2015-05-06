@@ -12,6 +12,7 @@ angular
 	$routeProvider.when('/', { templateUrl: '/public/partials/home.html', controller: 'HomeController' });
 
 	$routeProvider.when('/customers', { templateUrl: '/public/partials/customers.html', controller: 'CustomersController' });
+	$routeProvider.when('/input', { templateUrl: '/public/partials/input.html', controller: 'InputController' });
 	$routeProvider.when('/items', { templateUrl: '/public/partials/items.html', controller: 'ItemsController' });
 	$routeProvider.when('/mapping', { templateUrl: '/public/partials/mapping.html', controller: 'MappingController' });
 	$routeProvider.when('/profile', { templateUrl: '/public/partials/profile.html', controller: 'ProfileController' });

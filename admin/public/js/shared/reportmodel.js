@@ -285,4 +285,8 @@ window.app.ReportModel = class ReportModel {
         });
     });
   }
+
+  uploadData(request) {
+    return this._ReportService.uploadData(request);
+  }
 };

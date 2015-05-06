@@ -6,7 +6,7 @@ block head
 
 block menu
   div(role="navigation",class="navbar-default sidebar")
-    div(class="sidebar-nav navbar-collapse", extended='extended', ng-controller='MainMenuController', ng-include="'/public/partials/mainmenu.html'")
+    div(class="sidebar-nav navbar-collapse", ng-controller='MainMenuController', ng-include="'/public/partials/mainmenu.html'")
 
 block navigation
   div(ng-controller='NavigationController',src="'/public/partials/navigation.html'",ng-include,include-replace)

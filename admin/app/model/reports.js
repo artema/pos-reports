@@ -1,4 +1,5 @@
-var moment = require('moment');
+var AWS = require('aws-sdk'),
+    moment = require('moment');
 
 function formatDate(date, days) {
   var result = moment(date);
@@ -61,6 +62,28 @@ Reports.prototype.staff_top = function(query) {
     'SELECT `location_key`, DATE_FORMAT(`date`, "%Y-%m-%d") `date`, `staff_key`, `value` FROM `report-staff-top` WHERE `company_id` = ? AND `date` >= ? AND `date` < ? ORDER BY `date` ASC',
     [ query.company.id, formatDate(query.date), formatDate(query.date, query.days) ]
   );
+};
+
+Reports.prototype.uploadData = function(company, payload) {
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    var kinesis = new AWS.Kinesis();
+
+    kinesis.putRecord({
+      Data: JSON.stringify({
+        company: company.id,
+        sales: payload.sales || []
+      }),
+      PartitionKey: 'web',
+      StreamName: 'pos-input'
+    }, function(e) {
+      if (e) {
+        return reject(e);
+      }
+
+      resolve();
+    });
+  });
 };
 
 Reports.prototype._report = function(query, values) {

@@ -44,4 +44,13 @@ module.exports = function(app) {
   createReport('item-top');
   createReport('sales-total');
   createReport('staff-top');
+
+  app.post('/api/report', isAuthenticated, function(req, res) {
+    var reports = app.get('reports'),
+        users = app.get('users');
+
+    users.getCompany(req.user).then(function(company) {
+      reports.uploadData(company, req.body).then(onData(res), onError(res));
+    }, onError(res));
+  });
 };

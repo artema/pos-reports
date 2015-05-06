@@ -1,4 +1,5 @@
-var pkg = require('../package.json'),
+var AWS = require('aws-sdk'),
+    pkg = require('../package.json'),
     querystring = require('querystring');
 
 function getVariable(name) {
@@ -14,6 +15,11 @@ function parseVariable(name) {
 }
 
 module.exports = function(app) {
+  if (process.env.NODE_ENV !== 'production') {
+    AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'me' });
+    AWS.config.update({ region: 'eu-west-1' });
+  }
+
   app.set('cookie_secret', getVariable('COOKIE_SECRET'));
   app.set('database', parseVariable('DATABASE'));
   app.set('redis_configuration', querystring.parse(process.env.REDIS_CONFIGURATION));

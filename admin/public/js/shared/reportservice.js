@@ -7,7 +7,8 @@ window.app.ReportService = class ReportService {
       'itemPopular': $resource('/api/report/item-popular', {}, { query: { method: 'GET', isArray: true } }),
       'itemTop': $resource('/api/report/item-top', {}, { query: { method: 'GET', isArray: true } }),
       'salesTotal': $resource('/api/report/sales-total', {}, { query: { method: 'GET', isArray: true } }),
-      'staffTop': $resource('/api/report/staff-top', {}, { query: { method: 'GET', isArray: true } })
+      'staffTop': $resource('/api/report/staff-top', {}, { query: { method: 'GET', isArray: true } }),
+      'uploadData': $resource('/api/report', {}, { query: { method: 'POST' } })
     };
   }
 
@@ -37,6 +38,10 @@ window.app.ReportService = class ReportService {
 
   staffTop(query) {
     return this._api.staffTop.query(this._getQuery(query)).$promise;
+  }
+
+  uploadData(request) {
+    return this._api.uploadData.query(request).$promise;
   }
 
   _getQuery(query) {

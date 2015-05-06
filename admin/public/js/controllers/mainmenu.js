@@ -3,8 +3,6 @@ angular.module('PosReports.controllers')
   ['$scope', '$timeout', 'QueryModel',
   ($scope, $timeout, QueryModel) => {
 
-  $('#main-menu').metisMenu();
-
   $scope.year = QueryModel.year;
   $scope.month = QueryModel.month;
   $scope.query = {
