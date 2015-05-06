@@ -16,6 +16,7 @@ angular.module('PosReports.controllers')
             };
           });
 
+          $('#chart-sales-locations').empty();
           Morris.Donut({
             element: 'chart-sales-locations',
             data: locations.map(c => {
@@ -47,6 +48,7 @@ angular.module('PosReports.controllers')
 
           itemsPopularity.reverse();
 
+          $('#chart-sales-rates').empty();
           Morris.Area({
             element: 'chart-sales-rates',
             data: itemsPopularity,

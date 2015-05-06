@@ -1,12 +1,8 @@
 <ul id="main-menu" class="nav">
   <li class="sidebar-search">
-    <div class="input-group custom-search-form">
-      <input type="text" class="form-control" placeholder="Search...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">
-          <i class="fa fa-search"></i>
-        </button>
-      </span>
+    <div class="input-group custom-query-form">
+      <select id="query-year" class="form-control" ng-model="query.year" ng-options="year.value as year.name for year in years" ng-change="updateQuery()" />
+      <select id="query-month" class="form-control" ng-model="query.month" ng-options="month.value as month.name for month in months" ng-change="updateQuery()" />
     </div>
   </li>
   <li>

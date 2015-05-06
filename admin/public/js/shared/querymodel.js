@@ -17,8 +17,9 @@ window.app.QueryModel = class QueryModel {
   }
 
   set year(value) {
+    if (this._now.year() === value) { return; }
     this._now.year(value);
-    this.changed.dispatch(query);
+    this.changed.dispatch(this.query);
   }
 
   get year() {
@@ -26,8 +27,9 @@ window.app.QueryModel = class QueryModel {
   }
 
   set month(value) {
+    if (this._now.month() === value) { return; }
     this._now.month(value);
-    this.changed.dispatch(query);
+    this.changed.dispatch(this.query);
   }
 
   get month() {
@@ -35,8 +37,9 @@ window.app.QueryModel = class QueryModel {
   }
 
   set day(value) {
+    if (this._now.date() === value) { return; }
     this._now.date(value);
-    this.changed.dispatch(query);
+    this.changed.dispatch(this.query);
   }
 
   get day() {
@@ -44,8 +47,9 @@ window.app.QueryModel = class QueryModel {
   }
 
   set days(value) {
+    if (this._days === value) { return; }
     this._days = value;
-    this.changed.dispatch(query);
+    this.changed.dispatch(this.query);
   }
 
   get days() {

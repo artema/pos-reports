@@ -17,6 +17,7 @@ angular.module('PosReports.controllers')
         };
       }).filter((c, i) => i < 10));
 
+      $('#chart-customer-average').empty();
       ReportModel.customerAverage(QueryModel.query).then(averages => {
         Morris.Bar({
           element: 'chart-customer-average',

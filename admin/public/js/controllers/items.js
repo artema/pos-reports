@@ -47,6 +47,7 @@ angular.module('PosReports.controllers')
 
             itemsPopularity.reverse();
 
+            $('#chart-items-popularity').empty();
             Morris.Area({
               element: 'chart-items-popularity',
               data: itemsPopularity,

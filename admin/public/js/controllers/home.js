@@ -47,6 +47,7 @@ angular.module('PosReports.controllers')
                   return result;
                 });
 
+                $('#chart-home-item-top').empty();
                 Morris.Area({
                   element: 'chart-home-item-top',
                   data: itemsPopularity,
@@ -58,6 +59,7 @@ angular.module('PosReports.controllers')
                   resize: true
                 });
 
+                $('#chart-home-locations').empty();
                 Morris.Donut({
                   element: 'chart-home-locations',
                   data: locations.map(c => {
