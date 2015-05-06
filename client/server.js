@@ -13,39 +13,57 @@ function run(day, company) {
   }
 
   var items = [
-    { name: 'item1', price: 10.5 },
-    { name: 'item2', price: 5 },
-    { name: 'item3', price: 9 },
-    { name: 'item4', price: 15.75 },
-    { name: 'item5', price: 3.5 },
-    { name: 'item6', price: 10 },
-    { name: 'item7', price: 0.5 },
-    { name: 'item8', price: 7 },
-    { name: 'item9', price: 4 }
+    { name: 'item1', price: 100.5 },
+    { name: 'item2', price: 150 },
+    { name: 'item3', price: 290 },
+    { name: 'item4', price: 150.75 },
+    { name: 'item5', price: 230.5 },
+    { name: 'item6', price: 310 },
+    { name: 'item7', price: 200.5 },
+    { name: 'item8', price: 147 },
+    { name: 'item9', price: 240 }
   ];
 
   var customers = [
     "customer1",
     "customer2",
     "customer3",
-    "customer4"
+    "customer4",
+    "customer5",
+    "customer6",
+    "customer7",
+    "customer8",
+    "customer9",
+    "customer10",
+    "customer11",
+    "customer12"
   ];
 
   var staff = [
     "staff1",
     "staff2",
     "staff3",
-    "staff4"
+    "staff4",
+    "staff5",
+    "staff6",
+    "staff7",
+    "staff8",
+    "staff9",
+    "staff10",
+    "staff11",
+    "staff12"
   ];
 
   var locations = [
     "location1",
-    "location2"
+    "location2",
+    "location3",
+    "location4"
   ];
 
   var kinesis = new AWS.Kinesis();
 
-  for (var v = 0; v < 5; v++) {
+  for (var v = 0; v < 10; v++) {
     var sales = [];
     for (var i = 0; i < 100; i++) {
       var checkId = uuid.v4(),
@@ -95,4 +113,4 @@ function run(day, company) {
   }
 }
 
-run('2015-05-05', 1);
+run('2015-05-07', 1);

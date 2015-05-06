@@ -3,5 +3,5 @@ angular.module('PosReports.controllers')
   ['$scope', '$timeout', 'DialogManager', 'MappingModel',
   ($scope, $timeout, DialogManager, MappingModel) => {
 
-    
+  
 }]);

@@ -1,4 +1,4 @@
-window.app.LocalStorageStore = class LocalStorageStore extends Store {
+window.app.LocalStorageStore = class LocalStorageStore extends app.Store {
   constructor(id) {
     this._id = id;
   }
