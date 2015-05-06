@@ -1,9 +1,11 @@
 angular.module('PosReports.controllers')
 .controller('SalesController',
-  ['$scope', '$timeout', 'MappingModel', 'ReportModel', 'QueryModel',
-  ($scope, $timeout, MappingModel, ReportModel, QueryModel) => {
+  ['$scope', '$timeout', 'DialogManager', 'MappingModel', 'ReportModel', 'QueryModel',
+  ($scope, $timeout, DialogManager, MappingModel, ReportModel, QueryModel) => {
 
   function loadData() {
+    var job = DialogManager.startJob();
+
     ReportModel.salesTotal(QueryModel.query).then(locations => {
       ReportModel.salesTotalAll(QueryModel.query).then(salesTotal => {
         $timeout(() => {
@@ -62,6 +64,8 @@ angular.module('PosReports.controllers')
             parseTime: false,
             fillOpacity: 0
           });
+
+          DialogManager.endJob(job);
         });
       });
     });

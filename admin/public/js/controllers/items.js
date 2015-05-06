@@ -1,9 +1,11 @@
 angular.module('PosReports.controllers')
 .controller('ItemsController',
-  ['$scope', '$timeout', 'MappingModel', 'ReportModel', 'QueryModel',
-  ($scope, $timeout, MappingModel, ReportModel, QueryModel) => {
+  ['$scope', '$timeout', 'DialogManager', 'MappingModel', 'ReportModel', 'QueryModel',
+  ($scope, $timeout, DialogManager, MappingModel, ReportModel, QueryModel) => {
 
   function loadData() {
+    var job = DialogManager.startJob();
+
     ReportModel.itemPopular(QueryModel.query).then(items => {
       ReportModel.itemPair(QueryModel.query).then(pairs => {
         ReportModel.itemPopularAll(QueryModel.query).then(itemsAll => {
@@ -59,6 +61,8 @@ angular.module('PosReports.controllers')
               resize: true,
               parseTime: false
             });
+
+            DialogManager.endJob(job);
           });
         });
       });

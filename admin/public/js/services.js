@@ -1,4 +1,7 @@
 angular.module('PosReports.services', [])
+.factory('DialogManager', () => {
+  return new app.DialogManager();
+})
 .factory('MappingModel', () => {
   return new app.MappingModel();
 })

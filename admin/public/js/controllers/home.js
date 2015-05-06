@@ -1,9 +1,11 @@
 angular.module('PosReports.controllers')
 .controller('HomeController',
-  ['$scope', '$timeout', 'MappingModel', 'ReportModel', 'QueryModel',
-  ($scope, $timeout, MappingModel, ReportModel, QueryModel) => {
+  ['$scope', '$timeout', 'DialogManager', 'MappingModel', 'ReportModel', 'QueryModel',
+  ($scope, $timeout, DialogManager, MappingModel, ReportModel, QueryModel) => {
 
   function loadData() {
+    var job = DialogManager.startJob();
+
     ReportModel.customerAverage(QueryModel.query).then(customerAverages => {
       ReportModel.staffTop(QueryModel.query).then(staffs => {
         ReportModel.itemPopular(QueryModel.query).then(items => {
@@ -71,6 +73,8 @@ angular.module('PosReports.controllers')
                   }).filter((c, i) => i < 5),
                   resize: true
                 });
+
+                DialogManager.endJob(job);
               });
             });
           });

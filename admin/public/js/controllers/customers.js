@@ -1,11 +1,13 @@
 angular.module('PosReports.controllers')
 .controller('CustomersController',
-  ['$scope', '$timeout', 'MappingModel', 'ReportModel', 'QueryModel',
-  ($scope, $timeout, MappingModel, ReportModel, QueryModel) => {
+  ['$scope', '$timeout', 'DialogManager', 'MappingModel', 'ReportModel', 'QueryModel',
+  ($scope, $timeout, DialogManager, MappingModel, ReportModel, QueryModel) => {
 
   $scope.topCustomers = [];
 
   function loadData() {
+    var job = DialogManager.startJob();
+
     ReportModel.customerTop(QueryModel.query).then(customers => {
       $timeout(() => $scope.topCustomers = customers.map((c, i) => {
         let customer = MappingModel.getCustomer(c.customer_key);
@@ -34,6 +36,8 @@ angular.module('PosReports.controllers')
           resize: true
         });
       });
+
+      DialogManager.endJob(job);
     });
   }
 
