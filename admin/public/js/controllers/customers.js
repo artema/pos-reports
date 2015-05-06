@@ -44,4 +44,9 @@ angular.module('PosReports.controllers')
   loadData();
   MappingModel.changed.add(loadData);
   QueryModel.changed.add(loadData);
+
+  $scope.$on('$destroy', () => {
+    MappingModel.changed.remove(loadData);
+    QueryModel.changed.remove(loadData);
+  });
 }]);

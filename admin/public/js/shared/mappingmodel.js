@@ -6,19 +6,19 @@ window.app.MappingModel = class MappingModel {
 
     this._customers = {};
     this._customersStore = storageProvider('pos_mappings_customers');
-    this._customersStore.read(data => self._customers = data || self._customers);
+    this._customersStore.read().then(data => self._customers = self._parse(data));
 
     this._items = {};
     this._itemsStore = storageProvider('pos_mappings_items');
-    this._itemsStore.read(data => self._items = data || self._items);
+    this._itemsStore.read().then(data => self._items = self._parse(data));
 
     this._locations = {};
     this._locationsStore = storageProvider('pos_mappings_locations');
-    this._locationsStore.read(data => self._locations = data || self._locations);
+    this._locationsStore.read().then(data => self._locations = self._parse(data));
 
     this._staff = {};
     this._staffStore = storageProvider('pos_mappings_staff');
-    this._staffStore.read(data => self._staff = data || self._staff);
+    this._staffStore.read().then(data => self._staff = self._parse(data));
   }
 
   getCustomer(key) {
@@ -30,11 +30,12 @@ window.app.MappingModel = class MappingModel {
   }
 
   setCustomers(data) {
-    this._customersStore.write(this._customers = data);
+    this._customers = this._parse(data);
+    this._customersStore.write(data);
     this.changed.dispatch();
   }
 
-  customerCount() {
+  get customerCount() {
     return Object.keys(this._customers).length;
   }
 
@@ -46,11 +47,12 @@ window.app.MappingModel = class MappingModel {
   }
 
   setItems(data) {
-    this._itemsStore.write(this._items = data);
+    this._items = this._parse(data);
+    this._itemsStore.write(data);
     this.changed.dispatch();
   }
 
-  itemCount() {
+  get itemCount() {
     return Object.keys(this._items).length;
   }
 
@@ -62,11 +64,12 @@ window.app.MappingModel = class MappingModel {
   }
 
   setLocations(data) {
-    this._locationsStore.write(this._locations = data);
+    this._locations = this._parse(data);
+    this._locationsStore.write(data);
     this.changed.dispatch();
   }
 
-  locationCount() {
+  get locationCount() {
     return Object.keys(this._locations).length;
   }
 
@@ -79,11 +82,40 @@ window.app.MappingModel = class MappingModel {
   }
 
   setStaff(data) {
-    this._staffStore.write(this._staff = data);
+    this._staff = this._parse(data);
+    this._staffStore.write(data);
     this.changed.dispatch();
   }
 
-  staffCount() {
+  get staffCount() {
     return Object.keys(this._staff).length;
+  }
+
+  reset() {
+    this._customers = {};
+    this._customersStore.clear();
+
+    this._items = {};
+    this._itemsStore.clear();
+
+    this._locations = {};
+    this._locationsStore.clear();
+
+    this._staff = {};
+    this._staffStore.clear();
+
+
+    this.changed.dispatch();
+  }
+
+  _parse(items) {
+    if (!items || !items.length) {
+      return {};
+    }
+
+    return items.reduce((result, item) => {
+      result[item.id] = item;
+      return result;
+    }, {});
   }
 };

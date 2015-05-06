@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Управление данными</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="panel" ng-class="{ 'panel-info': locationCount, 'panel-danger': !locationCount }">
+      <div class="panel-heading">
+        Заведения
+      </div>
+      <div class="panel-body">
+        <form role="form" id="mappings-form-locations">
+          <div class="form-group">
+            <p ng-show="locationCount">Загружены данные о {{locationCount}} заведениях.</p>
+            <p ng-show="!locationCount">Данные о заведениях отсутствуют.</p>
+          </div>
+          <div class="form-group">
+            <label>Загрузить данные</label>
+            <input type="file" id="mappings-input-locations" />
+            <p class="help-block">Формат CSV файла: ID, Название</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-4">
+    <div class="panel" ng-class="{ 'panel-info': itemCount, 'panel-danger': !itemCount }">
+      <div class="panel-heading">
+        Товары
+      </div>
+      <div class="panel-body">
+        <form role="form" id="mappings-form-locations">
+          <div class="form-group">
+            <p ng-show="itemCount">Загружены данные о {{itemCount}} товарах.</p>
+            <p ng-show="!itemCount">Данные о товарах отсутствуют.</p>
+          </div>
+          <div class="form-group">
+            <label>Загрузить данные</label>
+            <input type="file" id="mappings-input-items" />
+            <p class="help-block">Формат CSV файла: ID, Наименование</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel" ng-class="{ 'panel-info': staffCount, 'panel-danger': !staffCount }">
+      <div class="panel-heading">
+        Персонал
+      </div>
+      <div class="panel-body">
+        <form role="form" id="mappings-form-staff">
+          <div class="form-group">
+            <p ng-show="staffCount">Загружены данные о {{staffCount}} работниках.</p>
+            <p ng-show="!staffCount">Данные о работниках отсутствуют.</p>
+          </div>
+          <div class="form-group">
+            <label>Загрузить данные</label>
+            <input type="file" id="mappings-input-staff" />
+            <p class="help-block">Формат CSV файла: ID, Имя, Фамилия</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel" ng-class="{ 'panel-info': customerCount, 'panel-danger': !customerCount }">
+      <div class="panel-heading">
+        Покупатели
+      </div>
+      <div class="panel-body">
+        <form role="form" id="mappings-form-customers">
+          <div class="form-group">
+            <p ng-show="customerCount">Загружены данные о {{customerCount}} покупателях.</p>
+            <p ng-show="!customerCount">Данные о покупателях отсутствуют.</p>
+          </div>
+          <div class="form-group">
+            <label>Загрузить данные</label>
+            <input type="file" id="mappings-input-customers" />
+            <p class="help-block">Формат CSV файла: ID, Имя, Фамилия</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-show="locationCount || itemCount || staffCount || customerCount">
+  <div class="col-lg-4">
+    <p>
+      <button
+        type="button"
+        class="btn btn-danger btn-lg btn-block"        
+        ng-click="reset()">
+          <i class="fa fa-exclamation-circle"></i> Удалить все данные
+      </button>
+    </p>
+  </div>
+</div>
