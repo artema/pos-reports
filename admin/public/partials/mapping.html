@@ -18,7 +18,7 @@
           </div>
           <div class="form-group">
             <label>Загрузить данные</label>
-            <input type="file" id="mappings-input-locations" />
+            <input type="file" id="mappings-input-locations" accept=".csv" />
             <p class="help-block">Формат CSV файла: ID, Название</p>
           </div>
         </form>
@@ -40,7 +40,7 @@
           </div>
           <div class="form-group">
             <label>Загрузить данные</label>
-            <input type="file" id="mappings-input-items" />
+            <input type="file" id="mappings-input-items" accept=".csv" />
             <p class="help-block">Формат CSV файла: ID, Наименование</p>
           </div>
         </form>
@@ -61,7 +61,7 @@
           </div>
           <div class="form-group">
             <label>Загрузить данные</label>
-            <input type="file" id="mappings-input-staff" />
+            <input type="file" id="mappings-input-staff" accept=".csv" />
             <p class="help-block">Формат CSV файла: ID, Имя, Фамилия</p>
           </div>
         </form>
@@ -82,7 +82,7 @@
           </div>
           <div class="form-group">
             <label>Загрузить данные</label>
-            <input type="file" id="mappings-input-customers" />
+            <input type="file" id="mappings-input-customers" accept=".csv" />
             <p class="help-block">Формат CSV файла: ID, Имя, Фамилия</p>
           </div>
         </form>
@@ -92,11 +92,11 @@
 </div>
 
 <div class="row" ng-show="locationCount || itemCount || staffCount || customerCount">
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <p>
       <button
         type="button"
-        class="btn btn-danger btn-lg btn-block"        
+        class="btn btn-danger btn-lg btn-block"
         ng-click="reset()">
           <i class="fa fa-exclamation-circle"></i> Удалить все данные
       </button>

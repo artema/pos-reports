@@ -1,6 +1,10 @@
 angular.module('PosReports.controllers')
 .controller('NavigationController',
-  ['$scope', '$timeout',
-  ($scope, $timeout) => {
+  ['$scope', '$timeout', 'DialogManager', 'UserModel',
+  ($scope, $timeout, DialogManager, UserModel) => {
 
+  $scope.logout = () => {
+    DialogManager.startJob();
+    UserModel.logout();
+  };
 }]);

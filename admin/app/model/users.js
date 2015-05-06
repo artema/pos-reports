@@ -50,6 +50,33 @@ Users.prototype.validatePassword = function(user, password) {
   return passwordHash.verify(password, user.password);
 };
 
+Users.prototype.changePassword = function(user, password) {
+  var self = this;
+  return new Promise(function(resolve, reject) {
+    if (!password || password.length < 4) {
+      return reject(new Error('Bad password'));
+    }
+
+    password = passwordHash.generate(password);
+
+    self._pool.getConnection(function(err, connection) {
+      if (err) {
+        return reject(err);
+      }
+
+      connection.query('UPDATE `user` SET `password` = ? WHERE `id` = ?', [ password, user.id ], function(err) {
+        if (err) {
+          return reject(err);
+        }
+
+        connection.release();
+
+        resolve();
+      });
+    });
+  });
+};
+
 module.exports = function(pool) {
   return new Users(pool);
 };

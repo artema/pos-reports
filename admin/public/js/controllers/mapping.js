@@ -20,6 +20,10 @@ angular.module('PosReports.controllers')
   updateStats();
   MappingModel.changed.add(updateStats);
 
+  $scope.$on('$destroy', () => {
+    MappingModel.changed.remove(updateStats);
+  });
+
   $scope.reset = () => {
     DialogManager.confirm('Вы действительно хотите удалить все загруженные данные?')
       .then(() => MappingModel.reset());
