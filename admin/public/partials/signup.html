@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Регистрация пользователя</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Данные пользователя
+      </div>
+      <div class="panel-body">
+        <form role="form" ng-submit="signUp()">
+          <div class="form-group">
+            <label>Логин</label>
+            <input type="text" class="form-control" ng-model="username" autocomplete="off" minlength="4" required pattern="[a-zA-Z0-9_-]+" />
+          </div>
+          <div class="form-group">
+            <label>Пароль</label>
+            <input type="password" id="signup-password" class="form-control" ng-model="password" autocomplete="off" minlength="4" required />
+          </div>
+          <div class="form-group">
+            <label>Еще раз</label>
+            <input type="password" id="signup-password2" class="form-control" ng-model="password2" autocomplete="off" minlength="4" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var password1 = document.getElementById('signup-password');
+  var password2 = document.getElementById('signup-password2');
+
+  var checkPasswordValidity = function() {
+      if (password1.value !== password2.value) {
+          password2.setCustomValidity('Пароли должны совпадать');
+      } else {
+          password2.setCustomValidity('');
+      }
+  };
+
+  password1.addEventListener('change', checkPasswordValidity, false);
+  password2.addEventListener('change', checkPasswordValidity, false);
+</script>

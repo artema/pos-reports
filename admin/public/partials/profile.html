@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-    <h1 class="page-header">Профиль пользователя</h1>
+    <h1 class="page-header">Настройки пользователя</h1>
   </div>
 </div>
 
@@ -25,6 +25,22 @@
             <input type="password" id="passwordedit-new-password2" class="form-control" ng-model="newPassword2" autocomplete="off" minlength="4" required />
           </div>
           <button type="submit" class="btn btn-primary">Изменить пароль</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Доступ к API
+      </div>
+      <div class="panel-body">
+        <form role="form" ng-submit="generateToken()">
+          <div class="form-group">
+            <p>Ваш ключ для доступа к API:<br/><b>{{authToken}}</b></p>
+          </div>
+          <button type="submit" class="btn btn-primary">Сгенерировать новый</button>
         </form>
       </div>
     </div>

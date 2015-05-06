@@ -16,6 +16,7 @@ angular
 	$routeProvider.when('/mapping', { templateUrl: '/public/partials/mapping.html', controller: 'MappingController' });
 	$routeProvider.when('/profile', { templateUrl: '/public/partials/profile.html', controller: 'ProfileController' });
 	$routeProvider.when('/sales', { templateUrl: '/public/partials/sales.html', controller: 'SalesController' });
+	$routeProvider.when('/signup', { templateUrl: '/public/partials/signup.html', controller: 'SignupController' });
 	$routeProvider.when('/staff', { templateUrl: '/public/partials/staff.html', controller: 'StaffController' });
 
 	$routeProvider.otherwise({ redirectTo: '/' });

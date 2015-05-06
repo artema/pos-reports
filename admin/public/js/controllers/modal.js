@@ -24,7 +24,7 @@ angular.module('PosReports.controllers')
 
     alertDialog = BootstrapDialog.show({
       type: BootstrapDialog.TYPE_INFO,
-      title: alertStack[alertIndex].title,
+      title: alertStack[alertIndex].title || 'Сообщение',
       message: alertStack[alertIndex].message,
       onhidden: function() {
         alertDialog = null;
