@@ -1,6 +1,6 @@
-module.exports = function(app) {
-  require('./api')(app);
+module.exports = function(app) {  
   require('./main')(app);
   require('./login')(app);
   require('./panel')(app);
+  require('./reports')(app);
 };

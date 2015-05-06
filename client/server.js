@@ -95,4 +95,4 @@ function run(day, company) {
   }
 }
 
-run('2015-05-06', 1);
+run('2015-05-05', 1);
