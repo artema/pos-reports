@@ -9,7 +9,7 @@ block menu
     div(class="sidebar-nav navbar-collapse", extended='extended', ng-controller='MainMenuController', ng-include="'/public/partials/mainmenu.html'")
 
 block navigation
-  div(ng-controller='NavigationController',ng-include="'/public/partials/navigation.html'")
+  div(ng-controller='NavigationController',src="'/public/partials/navigation.html'",ng-include,include-replace)
 
 block content
   #page-wrapper

@@ -16,7 +16,7 @@ angular.module('PosReports.controllers')
     { name: '2015', value: 2015 }
   ];
 
-  $scope.months = [
+  let month = [
     { name: 'Январь', value: 0 },
     { name: 'Февраль', value: 1 },
     { name: 'Март', value: 2},
@@ -30,6 +30,8 @@ angular.module('PosReports.controllers')
     { name: 'Ноябрь', value: 10 },
     { name: 'Декабрь', value: 11 }
   ];
+
+  $scope.months = month.filter(m => m.value <= QueryModel.month);
 
   $scope.updateQuery = () => {
     QueryModel.year = $scope.query.year;
