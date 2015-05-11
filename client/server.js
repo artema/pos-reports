@@ -113,4 +113,4 @@ function run(day, company) {
   }
 }
 
-run('2015-05-07', 1);
+run('2015-05-15', 1);
