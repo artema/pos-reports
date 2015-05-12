@@ -3,6 +3,12 @@ window.app.ReportModel = class ReportModel {
     this._ReportService = ReportService;
   }
 
+  billing(query) {
+    return this._ReportService.billing(query).then(data => {
+      return data;
+    });
+  }
+
   customerTop(query) {
     return this._ReportService.customerTop(query).then(data => {
       let items = data.reduce((result, entry) => {

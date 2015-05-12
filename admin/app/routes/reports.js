@@ -37,6 +37,7 @@ module.exports = function(app) {
     });
   }
 
+  createReport('billing');
   createReport('customer-average');
   createReport('customer-top');
   createReport('item-pair');

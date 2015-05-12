@@ -1,6 +1,7 @@
 window.app.ReportService = class ReportService {
   constructor($resource) {
     this._api = {
+      'billing': $resource('/api/report/billing', {}, { query: { method: 'GET', isArray: true } }),
       'customerAverage': $resource('/api/report/customer-average', {}, { query: { method: 'GET', isArray: true } }),
       'customerTop': $resource('/api/report/customer-top', {}, { query: { method: 'GET', isArray: true } }),
       'itemPair': $resource('/api/report/item-pair', {}, { query: { method: 'GET', isArray: true } }),
@@ -10,6 +11,10 @@ window.app.ReportService = class ReportService {
       'staffTop': $resource('/api/report/staff-top', {}, { query: { method: 'GET', isArray: true } }),
       'uploadData': $resource('/api/report', {}, { query: { method: 'POST' } })
     };
+  }
+
+  billing(query) {
+    return this._api.billing.query(this._getQuery(query)).$promise;
   }
 
   customerAverage(query) {

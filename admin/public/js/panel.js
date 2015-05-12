@@ -11,6 +11,7 @@ angular
 .config(($routeProvider) => {
 	$routeProvider.when('/', { templateUrl: '/public/partials/home.html', controller: 'HomeController' });
 
+	$routeProvider.when('/billing', { templateUrl: '/public/partials/billing.html', controller: 'BillingController' });
 	$routeProvider.when('/customers', { templateUrl: '/public/partials/customers.html', controller: 'CustomersController' });
 	$routeProvider.when('/input', { templateUrl: '/public/partials/input.html', controller: 'InputController' });
 	$routeProvider.when('/items', { templateUrl: '/public/partials/items.html', controller: 'ItemsController' });

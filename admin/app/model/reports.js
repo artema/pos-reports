@@ -11,6 +11,16 @@ function formatDate(date, days) {
   return result.format('YYYY-MM-DD 00:00:00');
 }
 
+function formatDateShort(date, days) {
+  var result = moment(date);
+
+  if (days > 0) {
+    result.add(days, 'days');
+  }
+
+  return result.format('YYYY-MM-DD');
+}
+
 function Reports(pool) {
   this._pool = pool;
 }
@@ -61,6 +71,13 @@ Reports.prototype.staff_top = function(query) {
   return this._report(
     'SELECT `location_key`, DATE_FORMAT(`date`, "%Y-%m-%d") `date`, `staff_key`, `value` FROM `report-staff-top` WHERE `company_id` = ? AND `date` >= ? AND `date` < ? ORDER BY `date` ASC',
     [ query.company.id, formatDate(query.date), formatDate(query.date, query.days) ]
+  );
+};
+
+Reports.prototype.billing = function(query) {
+  return this._report(
+    'SELECT DATE_FORMAT(`date`, "%Y-%m-%d") `date`, `sales` FROM `billing` WHERE `company_id` = ? AND `date` >= ? AND `date` < ? ORDER BY `date` ASC',
+    [ query.company.id, formatDateShort(query.date), formatDateShort(query.date, query.days) ]
   );
 };
 
